@@ -2,7 +2,7 @@
 import type { GlobalToken } from "antdv-next";
 import { FastColor } from "@ant-design/fast-color";
 import { computed, onMounted, ref } from "vue";
-import { injectStyles, TARGET_ATTR } from "./useStyle";
+import { useStyle, TARGET_ATTR } from "./useStyle";
 
 export interface DotInfo {
   key: number;
@@ -38,6 +38,12 @@ const showDots = ref(false);
 
 const targetAttrName = `${TARGET_ATTR}-${props.hashId}`;
 
+// Register CSS-in-JS styles (cache deduplicates across instances)
+useStyle(
+  computed(() => props.token),
+  computed(() => props.hashId),
+);
+
 // Helper function to check if point is in range
 function inRange(x: number, y: number, left: number, top: number, right: number, bottom: number) {
   return x >= left && x <= right && y >= top && y <= bottom;
@@ -52,8 +58,6 @@ function adjustHue(color: string, hueDelta: number): string {
 }
 
 onMounted(() => {
-  injectStyles(props.hashId);
-
   requestAnimationFrame(() => {
     if (["-dangerous", "-error"].some((skipCls) => props.target.className.includes(skipCls))) {
       props.onFinish();

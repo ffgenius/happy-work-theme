@@ -2,6 +2,7 @@
 import type { GlobalToken } from "antdv-next";
 import { computed, createApp, h, provide } from "vue";
 import DotEffect from "../DotEffect/index.vue";
+import { HAPPY_MODE_KEY } from "../composables/useHappyMode";
 
 export interface HappyProviderProps {
   /**
@@ -15,7 +16,6 @@ const props = withDefaults(defineProps<HappyProviderProps>(), {
   enabled: false,
 });
 
-const HAPPY_MODE_KEY = Symbol("HAPPY_MODE");
 provide(HAPPY_MODE_KEY, () => props.enabled);
 
 function showEffect(

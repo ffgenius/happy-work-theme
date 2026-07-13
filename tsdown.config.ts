@@ -9,5 +9,7 @@ export default defineConfig({
     vue: true,
   },
   clean: true,
-  external: ["vue", "antdv-next", "@ant-design/fast-color"],
+  deps: {
+    neverBundle: ["vue", "antdv-next", "@ant-design/fast-color", "@antdv-next/cssinjs"],
+  },
 });
